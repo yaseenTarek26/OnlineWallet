@@ -1,25 +1,15 @@
+package UserSignUp;
+
+import DataBaseQueryAndConnection.DBConnection;
+import DataBaseQueryAndConnection.Queries;
+import Modules.Users;
+import UserServices.userServicesAndValidationInputs;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Scanner;
-
-public class SignUpArabicSub {
-    public static Users SignUpArabic(){
-        try {
-            return (Users) SignInForArabic.singIn();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-
-
-
-}
- class SignUpForArabic {
-    public static Users SignUpForArabic() throws ParseException {
+public class SignUp {
+    public static Users signUp() throws ParseException {
         System.out.println("_________________________________________________________________________________________________________");
         System.out.println("Welcome user.");
         Scanner sc = new Scanner(System.in);
@@ -39,7 +29,7 @@ public class SignUpArabicSub {
         do {
             System.out.println("please enter your name:");
             System.out.print("enter here:");
-            name= sc.next();
+             name= sc.next();
             System.out.println("_________________________________________________________________________________________________________");
             if(userServicesAndValidationInputs.checkUserName(name)){
                 System.out.println("Please enter your name correctly name must contains more than 6 characters");}
@@ -47,7 +37,7 @@ public class SignUpArabicSub {
         do{
             System.out.println("please enter your email");
             System.out.print("enter here:");
-            email = sc.next();
+           email = sc.next();
             System.out.println("_________________________________________________________________________________________________________");
             if(userServicesAndValidationInputs.checkEmail(email)==false){
                 System.out.println("please enter your email correctly");}
@@ -86,28 +76,26 @@ public class SignUpArabicSub {
             }
 
         }while(!userServicesAndValidationInputs.checkUserPhone(phone));
-        Users user;
-        user = new Users();
-        user.setUserName(name);
-        user.setAge(Integer.parseInt(age));
-        user.setEmail(email);
-        user.setSecurityCode(userServicesAndValidationInputs.generateUserId());
-        user.setPassword(password);
-        user.setPhone(phone);
-        user.setNationalUserId(nationalUserId);
-        try {
-            Queries.insertUserAccountQuery(DBConnection.geConnection(), user);
-            System.out.println("______________________");
-            System.out.println("|signed up succssfully|");
-            System.out.println("______________________");
-        }catch(ClassNotFoundException ex){
-            System.out.println("something went wrong");
-        }catch(SQLException ex){
-            System.out.println("something went wrong please try again later");
-        }
+              Users user;
+             user = new Users();
+             user.setUserName(name);
+             user.setAge(Integer.parseInt(age));
+             user.setEmail(email);
+             user.setSecurityCode(userServicesAndValidationInputs.generateUserId());
+             user.setPassword(password);
+             user.setPhone(phone);
+             user.setNationalUserId(nationalUserId);
+            try {
+                  Queries.insertUserAccountQuery(DBConnection.geConnection(), user);
+                System.out.println("______________________");
+                System.out.println("|signed up succssfully|");
+                System.out.println("______________________");
+            }catch(ClassNotFoundException ex){
+                System.out.println("something went wrong");
+            }catch(SQLException ex){
+                System.out.println("something went wrong please try again later");
+            }
 
-        return user;
+return user;
     }
-
 }
-

@@ -1,3 +1,13 @@
+package UserPageModules;
+
+import DataBaseQueryAndConnection.DBConnection;
+import DataBaseQueryAndConnection.Queries;
+import Managers.ProgramManager;
+import Modules.CommandLineTable;
+import Modules.OptionGenerator;
+import Modules.Users;
+import UserServices.userServicesAndValidationInputs;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,7 +100,7 @@ private static void printUserData(Connection conn, Users user, int SercurityCode
           System.out.println("_________________________________________________________________________________________________________");
           System.out.printf("|this is your personal data check for it:                                                                %s","|" );
           System.out.println();
-          System.out.printf("user Name : %s                                                                                          ",Queries.getNameByuserId(conn,user.getUserId()));
+          System.out.printf("user Name : %s                                                                                          ", Queries.getNameByuserId(conn,user.getUserId()));
           System.out.println();
           System.out.printf("user nationalId : %s                                                                                          ",Queries.getNationalUserIdByUserId(conn,user.getUserId()));
           System.out.println();

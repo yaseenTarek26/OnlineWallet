@@ -1,3 +1,10 @@
+package UserSignIn;
+
+import DataBaseQueryAndConnection.DBConnection;
+import DataBaseQueryAndConnection.Queries;
+import Modules.Users;
+import UserServices.userServicesAndValidationInputs;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

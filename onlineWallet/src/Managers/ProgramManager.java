@@ -1,3 +1,10 @@
+package Managers;
+
+import UserPageModules.UserPage;
+import UserServices.userServicesAndValidationInputs;
+import UserSignIn.SignIn;
+import UserSignUp.SignUp;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Scanner;

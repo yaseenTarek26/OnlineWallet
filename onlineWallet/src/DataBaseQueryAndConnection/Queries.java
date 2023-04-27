@@ -1,3 +1,8 @@
+package DataBaseQueryAndConnection;
+
+import Modules.Users;
+import UserServices.userServicesAndValidationInputs;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +32,7 @@ public class Queries{
             System.out.println("data inserted succssfully");
       return  SearchForUsersQuery(conn,user);
     }
-    public static ResultSet SearchForUsersQuery(Connection conn, Users user){
+    public static ResultSet SearchForUsersQuery(Connection conn, Modules.Users user){
         String query = "select * from usersTable join personalUserData using(userId) where usersTable.userEmail =? and usersTable.userPassword =?";
         ResultSet rs = null;
         try {
@@ -85,7 +90,7 @@ public static boolean DepositQueryToAnotherUser(Connection conn , int userId , i
     PreparedStatement stmt2 = conn.prepareStatement(query2);
     stmt2.setInt(1,userId);
     stmt2.setString(2,"wirthdraw");
-    stmt2.setTimestamp(3,userServicesAndValidationInputs.getCurrentTimeStamp());
+    stmt2.setTimestamp(3, userServicesAndValidationInputs.getCurrentTimeStamp());
     stmt2.setInt(4,depositNumber);
     stmt2.setString(5, getEmailByUserIdQuery(conn,userId));
     stmt2.setString(6,userAcocunt);

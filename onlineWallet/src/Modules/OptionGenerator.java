@@ -1,3 +1,7 @@
+package Modules;
+
+import UserServices.userServicesAndValidationInputs;
+
 import java.util.Scanner;
 public class OptionGenerator {
    private  String[] options;

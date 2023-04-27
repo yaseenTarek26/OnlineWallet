@@ -1,3 +1,10 @@
+package UserServices;
+
+import DataBaseQueryAndConnection.DBConnection;
+import DataBaseQueryAndConnection.Queries;
+import Managers.ProgramManager;
+import Modules.userPrintMassages;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -5,8 +12,7 @@ import java.sql.Timestamp;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-public class userServiceAndValidationInputsArabicSub {
+public class userServicesAndValidationInputs {
     private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
     private static final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 
@@ -76,11 +82,11 @@ public class userServiceAndValidationInputsArabicSub {
         boolean con = true;
         do {
             System.out.println("_________________________________________________________________________________________________________");
-            System.out.println("اضغط 1 للعودة ، اضغط 2 لمتابعة العملية");
+            System.out.println("press 1 to go back, press 2 continue to the operation");
             String choose;
             do {
                 choose = sc.next();
-                if (!isNumber(choose)) System.out.println("مدخل غير صالح");
+                if (!isNumber(choose)) System.out.println("invalid input");
             } while (!(isNumber(choose)));
             switch (Integer.parseInt(choose)) {
                 case 1:
@@ -89,7 +95,7 @@ public class userServiceAndValidationInputsArabicSub {
                     con = false;
                     break;
                 default:
-                    System.out.println("مدخل غير صالح");
+                    System.out.println("Invalid input");
             }
         } while (con);
     }
@@ -99,10 +105,10 @@ public class userServiceAndValidationInputsArabicSub {
     }
 
     public static boolean updateUserName(Connection conn, Scanner sc , int userId) {
-        String userName;
+      String userName;
         do{
             userName = sc.next();
-            if(!checkUserName(userName)) System.out.println("لا يمكنك استخدام هذا الاسم");
+            if(!checkUserName(userName)) System.out.println("you can't user this name");
         }while(!checkUserName(userName));
         try {
             Queries.updateUserNameQuery(conn,userId,userName);
@@ -115,77 +121,75 @@ public class userServiceAndValidationInputsArabicSub {
         String userPhone;
         do{
             userPhone = sc.next();
-            if(!checkUserPhone(userPhone)) System.out.println("هذا الرقم غير صحيح.");
+            if(!checkUserPhone(userPhone)) System.out.println("this number is incorrect.");
         }while(!checkUserPhone(userPhone));
         try {
             Queries.updateUserPhoneQuery(conn ,userId,userPhone);
         } catch (SQLException e) {
             return false;
         }
-        return true;
+return true;
     }
-    public static boolean updateUserEmail(Connection conn , Scanner sc , int userId){
+public static boolean updateUserEmail(Connection conn , Scanner sc , int userId){
         String userEmail;
         do{
-            System.out.println("أدخل بريدك الإلكتروني الجديد");
+            System.out.println("enter your new email");
             userEmail = sc.next();
-            if(!checkEmail(userEmail)) System.out.println("لا يمكن أن يكون هذا بريدًا إلكترونيًا");
+            if(!checkEmail(userEmail)) System.out.println("this can't be an email");
         }while(!checkEmail(userEmail));
-        try {
-            Queries.updateUserEmailQuery(conn,userId,userEmail);
-        } catch (SQLException e) {
-            return false;
-        }
-        System.out.println("تم تغيير بريدك الإلكتروني");
-        return true;
+    try {
+        Queries.updateUserEmailQuery(conn,userId,userEmail);
+    } catch (SQLException e) {
+        return false;
     }
-    public static boolean checkNationalUserId(String nationalUserId){
+    System.out.println("your email is changed");
+    return true;
+}
+public static boolean checkNationalUserId(String nationalUserId){
         if(nationalUserId.length()==14&& isNumber(nationalUserId))return true;
         else return false;}
 
-    public static boolean updateUserPassword(Connection conn, Scanner sc ,int userId){
+public static boolean updateUserPassword(Connection conn, Scanner sc ,int userId){
 //method used to update user password return false if the operation is.
 // canceled and return true if the operation is done sucssfully.
-        userPrintMassages message = new userPrintMassages();
-        String userCurrentPassword;
-        String userNewPassowrd;
-        String userConfiramtionOperation;
-        System.out.println("الرجاء إدخال كلمة المرور الحالية الخاصة بك ، تريد إلغاء اضغط e");
+ Modules.userPrintMassages message = new userPrintMassages();
+String userCurrentPassword;
+String userNewPassowrd;
+String userConfiramtionOperation;
+    System.out.println("please enter your current password, want to cancel press e");
         do {
             userCurrentPassword = sc.next();
             if(userCurrentPassword.equals("e"))return false;
-            if(!isUserPasswordEqualSystemPassword(userCurrentPassword, userId)) System.out.println("قمت بإدخال كلمة مرور خاطئة.");
+            if(!isUserPasswordEqualSystemPassword(userCurrentPassword, userId)) System.out.println("you enter wrong password.");
         } while (!isUserPasswordEqualSystemPassword(userCurrentPassword, userId));
-        System.out.println("أدخل كلمة مرورك الجديدة الآن.");
-        do{
-            userNewPassowrd = sc.next();
-            if(userNewPassowrd.equals("e"))return false;
-            if(!userServicesAndValidationInputs.checkPassword(userNewPassowrd))message.passwordEnCorrectMessage();
-        }while(!userServicesAndValidationInputs.checkPassword(userNewPassowrd));
-        message.UserAcceptToChangePassowrd();
-        System.out.print("أدخل هنا");
-        do{
-            userConfiramtionOperation = sc.next();
-            if(userConfiramtionOperation.equals("n")){return false;}
-        }while(!userConfiramtionOperation.equals("y"));
+    System.out.println("now enter your new password.");
+       do{
+        userNewPassowrd = sc.next();
+           if(userNewPassowrd.equals("e"))return false;
+        if(!userServicesAndValidationInputs.checkPassword(userNewPassowrd))message.passwordEnCorrectMessage();
+    }while(!userServicesAndValidationInputs.checkPassword(userNewPassowrd));
+       message.UserAcceptToChangePassowrd();
+    System.out.print("enter here");
+    do{
+        userConfiramtionOperation = sc.next();
+       if(userConfiramtionOperation.equals("n")){return false;}
+    }while(!userConfiramtionOperation.equals("y"));
 
         try {
-            System.out.println("العملية كاملة");
+            System.out.println("operation complete");
             return Queries.updateUserPasswordQuery(conn, userId, userNewPassowrd);
         } catch (SQLException e) {
             return false;
         }
-
+}
+private static boolean isUserPasswordEqualSystemPassword( String userEnteredPassword,int userId){
+    try {
+        return Queries.getCurrentPasswordByUserId(DBConnection.geConnection(),userId).equals(userEnteredPassword);
+    } catch (ClassNotFoundException e) {
+       return false;
+    } catch (SQLException e) {
+    return false;
     }
-    private static boolean isUserPasswordEqualSystemPassword( String userEnteredPassword,int userId){
-        try {
-            return Queries.getCurrentPasswordByUserId(DBConnection.geConnection(),userId).equals(userEnteredPassword);
-        } catch (ClassNotFoundException e) {
-            return false;
-        } catch (SQLException e) {
-            return false;
-        }
-    }
-
+}
 
 }
